@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Услуги{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 40px 0;">
+    <h1>Услуги</h1>
+    <p>Здесь перечислены основные услуги клиники. Нажмите "Оплатить", чтобы перейти к онлайн-оплате выбранной услуги.</p>
+
+    {% if services.exists %}
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px;">
+            {% for service in services %}
+                <div class="card" style="padding: 16px;">
+                    <h3>{{ service.name }}</h3>
+                    <p>{{ service.description|default:"Описание услуги пока отсутствует." }}</p>
+                    <p><strong>Стоимость:</strong> уточняется при записи</p>
+                    <br>
+                    <a href="{% url 'online_payment' %}" class="btn">Оплатить</a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Услуги пока не добавлены. Добавьте специализации в админке, чтобы они отображались здесь.</p>
+    {% endif %}
+
+    {% if popular_services.exists %}
+        <section style="margin-top: 40px;">
+            <h2>Популярные услуги</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; margin-top: 16px;">
+                {% for service in popular_services %}
+                    <div class="card" style="padding: 16px;">
+                        <h4>{{ service.name }}</h4>
+                        <p>{{ service.description|truncatechars:80|default:"Описание отсутствует" }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Онлайн оплата{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 40px 0;">
+    <h1>Онлайн оплата</h1>
+    <p>Пожалуйста, заполните данные для оплаты. Это тестовый режим — оплата симулируется.</p>
+
+    <form method="post" style="max-width: 600px;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <br>
+        <button type="submit" class="btn" style="margin-top: 10px;">Оплатить</button>
+    </form>
+</div>
+{% endblock %}

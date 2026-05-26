@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Оплата успешна{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 40px 0;">
+    <h1>Платёж успешно обработан</h1>
+    <p>Спасибо, {{ payment.patient_name }}. Ваша транзакция выполнена.</p>
+    <ul>
+        <li><strong>Транзакция:</strong> {{ payment.transaction_id }}</li>
+        <li><strong>Сумма:</strong> {{ payment.amount }} ₽</li>
+        <li><strong>Назначение:</strong> {{ payment.purpose }}</li>
+        <li><strong>Статус:</strong> {{ payment.get_status_display }}</li>
+    </ul>
+    <br>
+    <a href="{% url 'home' %}" class="btn">Вернуться на главную</a>
+</div>
+{% endblock %}

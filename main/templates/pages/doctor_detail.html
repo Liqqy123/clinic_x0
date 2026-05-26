@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ doctor.name }}{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 40px 0;">
+    <div class="doctor-detail" style="display: flex; gap: 40px; flex-wrap: wrap;">
+        <div style="flex: 0 0 250px; text-align: center;">
+            {% if doctor.photo %}
+                <img src="{{ doctor.photo.url }}" alt="{{ doctor.name }}" style="width: 100%; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+            {% else %}
+                <div style="background: #e2e8f0; border-radius: 16px; padding: 60px 20px; text-align: center; font-size: 80px;">👨‍⚕️</div>
+            {% endif %}
+        </div>
+        <div style="flex: 1;">
+            <h1>{{ doctor.name }}</h1>
+            <p style="color: #4b5568;">{{ doctor.specialization }}</p>
+            <hr>
+            <h3>О враче</h3>
+            <p>{{ doctor.bio|default:"Нет информации" }}</p>
+            {% if doctor.experience %}
+                <p><strong>Стаж работы:</strong> {{ doctor.experience }} лет.</p>
+            {% endif %}
+            {% if doctor.clinic_address %}
+                <p><strong>Клиника:</strong> {{ doctor.clinic_address }}</p>
+            {% endif %}
+            {% if doctor.degree %}
+                <p><strong>Учёная степень/Категория:</strong> {{ doctor.degree }}</p>
+            {% endif %}
+            {% if doctor.specialization_list %}
+                <h4>Специализация:</h4>
+                <div style="background: #f5f5f5; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-wrap: break-word; font-family: monospace;">{{ doctor.specialization_list }}</div>
+            {% endif %}
+
+            {% if is_this_doctor %}
+                <a href="{% url 'doctor_dashboard' %}" class="btn" style="margin-top: 20px;">📋 Мои записи на приём</a>
+            {% else %}
+            <br>
+                <a href="{% url 'appointments:create' %}?doctor={{ doctor.id }}" class="btn" style="margin-top: 20px;">📅 Записаться на приём</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
